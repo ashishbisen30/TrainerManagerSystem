@@ -1,49 +1,55 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TrainerManager.Application.Features.Trainers.DTOs;
 using TrainerManager.Domain.ValueObjects;
 using TrainerManager.Infrastructure.Data;
 using TrainerManager.Infrastructure.Services;
 
 namespace TrainerManager.Application.Features.Trainers.Commands
 {
-    public class UpdateTrainerCommand : IRequest<bool>
+    // Returns a DTO of the updated trainer to the frontend
+    public record UpdateTrainerCommand : IRequest<TrainerSummaryDto>
     {
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? City { get; set; }
-        public string? Country { get; set; }
-        public decimal Rate { get; set; }
-        public IFormFile? NewProfileImage { get; set; } // Optional
+        public int Id { get; init; }
+        public string FirstName { get; init; } = string.Empty;
+        public string LastName { get; init; } = string.Empty;
+        public string Email { get; init; } = string.Empty;
+        public string PhoneNumber { get; init; } = string.Empty;
+        public string Field { get; init; } = string.Empty;
+        public int YearsOfExperience { get; init; }
+        public decimal HourlyRate { get; init; } // For the Costing nested object
     }
 
-    public class UpdateTrainerHandler(TrainerDbContext context, IFileStorageService files)
-        : IRequestHandler<UpdateTrainerCommand, bool>
+    public class UpdateTrainerHandler(TrainerDbContext context, IMapper mapper)
+        : IRequestHandler<UpdateTrainerCommand, TrainerSummaryDto>
     {
-        public async Task<bool> Handle(UpdateTrainerCommand request, CancellationToken ct)
+        public async Task<TrainerSummaryDto> Handle(UpdateTrainerCommand request, CancellationToken ct)
         {
-            var trainer = await context.Trainers.FirstOrDefaultAsync(t => t.Id == request.Id, ct);
-            if (trainer == null) return false;
+            // 1. Fetch the existing entity (do NOT use AsNoTracking because we want to update it)
+            var trainer = await context.Trainers
+                .Include(t => t.Costing) // Include owned entities or relations if necessary
+                .FirstOrDefaultAsync(t => t.Id == request.Id, ct);
 
-            trainer.FirstName = request.FirstName;
-            trainer.LastName = request.LastName;
-            trainer.Email = request.Email;
-            trainer.Address = new Address("", request.City, "", "", request.Country);
-            trainer.Costing = new TrainerCosting(request.Rate, trainer.Costing.Currency);
-
-            if (request.NewProfileImage != null)
+            if (trainer == null)
             {
-                files.DeleteFile(trainer.ProfileImagePath);
-                trainer.ProfileImagePath = await files.SaveFileAsync(request.NewProfileImage, "images");
+                // You can throw a custom NotFoundException here
+                throw new KeyNotFoundException($"Trainer with ID {request.Id} was not found.");
             }
 
+            // 2. Map the request values onto the existing trainer object
+            // AutoMapper updates 'trainer' directly with 'request' data
+            mapper.Map(request, trainer);
+
+            // 3. Save changes
             await context.SaveChangesAsync(ct);
-            return true;
+
+            // 4. Return the updated version mapped to a DTO
+            return mapper.Map<TrainerSummaryDto>(trainer);
         }
     }
 }

@@ -1,5 +1,7 @@
 // Program.cs
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TrainerManager.Application;
 using TrainerManager.Infrastructure.Data;
 using TrainerManager.Infrastructure.Services;
 
@@ -12,7 +14,7 @@ builder.Services.AddControllers();
 // SWAGGER SERVICES ADDED HERE
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); ;
-
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 builder.Services.AddDbContext<TrainerDbContext>(opt => opt.UseSqlite("Data Source=Trainers.db"));
