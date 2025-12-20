@@ -28,6 +28,22 @@ namespace TrainerManager.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(TrainerSummaryDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TrainerSummaryDto>> GetById(int id)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetTrainerByIdQuery(id));
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
         // <summary>
         /// Update an existing trainer's details.
         /// </summary>
