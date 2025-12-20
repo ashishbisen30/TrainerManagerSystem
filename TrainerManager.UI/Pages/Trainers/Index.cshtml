@@ -1,0 +1,34 @@
+﻿@page "/trainers"
+@model TrainerManager.UI.Pages.Trainers.IndexModel
+@{
+    ViewData["Title"] = "Trainers";
+}
+
+<div class="container mt-4">
+    <h3>Trainers</h3>
+
+    @if (Model.Data != null && Model.Data.Items.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var trainer in Model.Data.Items)
+                {
+                    <tr>
+                        <td>@trainer.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <p>Total Count: @Model.Data.TotalCount</p>
+    }
+    else
+    {
+        <div class="alert alert-warning">No trainers found.</div>
+    }
+</div>

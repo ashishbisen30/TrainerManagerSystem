@@ -1,0 +1,71 @@
+﻿@page "/trainers/edit/{Id:int}"
+@using TrainerManager.Application.Features.Trainers.Commands
+@using TrainerManager.Application.Features.Trainers.DTOs
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<div class="container mt-4">
+    <h3>Edit Trainer</h3>
+
+    @if (command == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <EditForm Model="command" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="mb-3">
+                <label>First Name</label>
+                <InputText class="form-control" @bind-Value="command.FirstName" />
+            </div>
+
+            <div class="mb-3">
+                <label>Last Name</label>
+                <InputText class="form-control" @bind-Value="command.LastName" />
+            </div>
+
+            <div class="mb-3">
+                <label>Hourly Rate</label>
+                <InputNumber class="form-control" @bind-Value="command.HourlyRate" />
+            </div>
+
+            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-link" @onclick='() => Nav.NavigateTo("/trainers")'>Cancel</button>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private UpdateTrainerCommand? command;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var existing = await Http.GetFromJsonAsync<TrainerSummaryDto>($"api/trainers/{Id}");
+
+        if (existing != null)
+        {
+            // Object initialization - resolving the 'init' vs 'set' issue
+            command = new UpdateTrainerCommand
+            {
+                Id = existing.Id,
+                FirstName = existing.FullName.Split(' ')[0],
+                LastName = existing.FullName.Contains(' ') ? existing.FullName.Split(' ')[1] : "",
+                Email = existing.Email,
+                Field = existing.Field,
+                HourlyRate = existing.HourlyRate
+            };
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        var result = await Http.PutAsJsonAsync($"api/trainers/{Id}", command);
+        if (result.IsSuccessStatusCode)
+        {
+            Nav.NavigateTo("/trainers");
+        }
+    }
+}

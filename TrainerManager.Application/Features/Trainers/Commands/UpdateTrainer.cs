@@ -15,14 +15,14 @@ namespace TrainerManager.Application.Features.Trainers.Commands
     // Returns a DTO of the updated trainer to the frontend
     public record UpdateTrainerCommand : IRequest<TrainerSummaryDto>
     {
-        public int Id { get; init; }
-        public string FirstName { get; init; } = string.Empty;
-        public string LastName { get; init; } = string.Empty;
-        public string Email { get; init; } = string.Empty;
-        public string PhoneNumber { get; init; } = string.Empty;
-        public string Field { get; init; } = string.Empty;
-        public int YearsOfExperience { get; init; }
-        public decimal HourlyRate { get; init; } // For the Costing nested object
+        public int Id { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string Field { get; set; } = string.Empty;
+        public int YearsOfExperience { get; set; }
+        public decimal HourlyRate { get; set; } // For the Costing nested object
     }
 
     public class UpdateTrainerHandler(TrainerDbContext context, IMapper mapper)

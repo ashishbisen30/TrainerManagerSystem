@@ -4,5 +4,6 @@
     <Project Path="TrainerManager.Application/TrainerManager.Application.csproj" />
     <Project Path="TrainerManager.Domain/TrainerManager.Domain.csproj" />
     <Project Path="TrainerManager.Infrastructure/TrainerManager.Infrastructure.csproj" />
+    <Project Path="TrainerManager.UI/TrainerManager.UI.csproj" Id="e87300e0-f890-4c0d-a22c-2ab7a89165a6" />
   </Folder>
 </Solution>

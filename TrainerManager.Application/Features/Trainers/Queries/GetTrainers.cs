@@ -7,7 +7,7 @@ using TrainerManager.Application.Features.Trainers.DTOs;
 
 namespace TrainerManager.Application.Features.Trainers.Queries
 {
-    public record PaginatedResponse(int TotalCount, int PageIndex, int PageSize, IEnumerable<TrainerSummaryDto> Items);
+    //public record PaginatedResponse(int TotalCount, int PageIndex, int PageSize, IEnumerable<TrainerSummaryDto> Items);
 
     public record GetTrainersQuery : IRequest<PaginatedResponse>
     {
@@ -57,7 +57,15 @@ namespace TrainerManager.Application.Features.Trainers.Queries
                 .ProjectTo<TrainerSummaryDto>(mapper.ConfigurationProvider)
                 .ToListAsync(ct);
 
-            return new PaginatedResponse(totalCount, request.PageIndex, request.PageSize, items);
+            // CHANGE THE RETURN LINE TO THIS:
+            return new PaginatedResponse
+            {
+                TotalCount = totalCount,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                Items = items
+            };
+            //return new PaginatedResponse(totalCount, request.PageIndex, request.PageSize, items);
         }
     }
 }

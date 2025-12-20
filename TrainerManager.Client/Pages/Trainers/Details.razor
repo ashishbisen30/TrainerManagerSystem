@@ -1,0 +1,47 @@
+﻿@page "/trainers/{Id:int}"
+@using TrainerManager.Application.Features.Trainers.DTOs
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<div class="container mt-4">
+    <button class="btn btn-link p-0 mb-3" @onclick='() => Nav.NavigateTo("/trainers")'>← Back to List</button>
+
+    @if (trainer == null)
+    {
+        <div class="spinner-border"></div>
+    }
+    else
+    {
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Trainer Profile</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Full Name:</strong> @trainer.FullName</p>
+                        <p><strong>Email:</strong> @trainer.Email</p>
+                        <p><strong>Field of Expertise:</strong> @trainer.Field</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Experience:</strong> @trainer.Experience Years</p>
+                        <p><strong>Hourly Rate:</strong> @trainer.HourlyRate.ToString("C")</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-warning" @onclick='() => Nav.NavigateTo($"/trainers/edit/{trainer.Id}")'>Edit Profile</button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private TrainerSummaryDto? trainer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        trainer = await Http.GetFromJsonAsync<TrainerSummaryDto>($"api/trainers/{Id}");
+    }
+}

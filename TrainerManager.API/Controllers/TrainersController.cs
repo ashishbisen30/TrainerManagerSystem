@@ -4,6 +4,7 @@ using System.Net.Mime;
 using TrainerManager.Application.Features.Trainers.Commands;
 using TrainerManager.Application.Features.Trainers.DTOs;
 using TrainerManager.Application.Features.Trainers.Queries;
+using PaginatedResponse = TrainerManager.Application.Features.Trainers.DTOs.PaginatedResponse;
 
 namespace TrainerManager.API.Controllers
 {

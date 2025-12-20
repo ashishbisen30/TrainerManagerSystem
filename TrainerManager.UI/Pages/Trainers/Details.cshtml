@@ -1,0 +1,16 @@
+﻿@page "{id:int}"
+@model TrainerManager.UI.Pages.Trainers.DetailsModel
+
+<div class="card shadow">
+    <div class="card-header bg-dark text-white">
+        <h4>Trainer Profile</h4>
+    </div>
+    <div class="card-body">
+        <h3>@Model.Trainer.FullName</h3>
+        <p><strong>Email:</strong> @Model.Trainer.Email</p>
+        <p><strong>Expertise:</strong> @Model.Trainer.Field</p>
+    </div>
+    <div class="card-footer">
+        <a asp-page="./Index" class="btn btn-secondary">Back</a>
+    </div>
+</div>
