@@ -1,0 +1,103 @@
+﻿@page
+@model TrainerManager.UI.Pages.Trainers.CreateModel
+
+<div class="container mt-4 mb-5">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Full Trainer Registration</h5>
+            </div>
+            <div class="card-body">
+
+                <h6 class="text-primary border-bottom pb-2">Basic Details</h6>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="Command.FirstName">First Name</label>
+                        <input asp-for="Command.FirstName" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Command.LastName">Last Name</label>
+                        <input asp-for="Command.LastName" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Command.Email">Email</label>
+                        <input asp-for="Command.Email" class="form-control" />
+                    </div>
+                </div>
+
+                <h6 class="text-primary border-bottom pb-2 mt-4">Address Details</h6>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Command.Street">Street</label>
+                        <input asp-for="Command.Street" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Command.City">City</label>
+                        <input asp-for="Command.City" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Command.State">State</label>
+                        <input asp-for="Command.State" class="form-control" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Command.Country">Country</label>
+                        <input asp-for="Command.Country" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Command.Zip">Zip Code</label>
+                        <input asp-for="Command.Zip" class="form-control" />
+                    </div>
+                </div>
+
+                <h6 class="text-primary border-bottom pb-2 mt-4">Professional & Financial</h6>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="Command.TechField">Technical Field</label>
+                        <input asp-for="Command.TechField" class="form-control" placeholder="e.g. IT" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Command.Experience">Years of Exp</label>
+                        <input asp-for="Command.Experience" type="number" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Command.Rate">Hourly Rate</label>
+                        <input asp-for="Command.Rate" type="number" class="form-control" />
+                    </div>
+                </div>
+
+                <h6 class="text-primary border-bottom pb-2 mt-4">Bank Details</h6>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Command.BankName">Bank Name</label>
+                        <input asp-for="Command.BankName" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Command.AccountNumber">Account Number</label>
+                        <input asp-for="Command.AccountNumber" class="form-control" />
+                    </div>
+                </div>
+
+                <h6 class="text-primary border-bottom pb-2 mt-4">Documents</h6>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>Profile Image</label>
+                        <input asp-for="Command.ProfileImage" type="file" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Resume</label>
+                        <input asp-for="Command.ResumeFile" type="file" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light text-end">
+                    <a asp-page="Index" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-success px-5 shadow">Save Trainer</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

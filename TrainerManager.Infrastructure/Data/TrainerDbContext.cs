@@ -15,6 +15,7 @@ namespace TrainerManager.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Trainer>(b => {
                 b.OwnsOne(t => t.Address);
                 b.OwnsOne(t => t.Costing);

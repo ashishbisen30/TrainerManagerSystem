@@ -1,16 +1,113 @@
 ﻿@page "{id:int}"
 @model TrainerManager.UI.Pages.Trainers.DetailsModel
+@{
+    ViewData["Title"] = "Trainer Details";
+}
 
-<div class="card shadow">
-    <div class="card-header bg-dark text-white">
-        <h4>Trainer Profile</h4>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Trainer Profile</h2>
+        <div>
+            <a asp-page="./Index" class="btn btn-outline-secondary">Back to List</a>
+            <a asp-page="./Edit" asp-route-id="@Model.Trainer.Id" class="btn btn-primary">Edit Profile</a>
+        </div>
     </div>
-    <div class="card-body">
-        <h3>@Model.Trainer.FullName</h3>
-        <p><strong>Email:</strong> @Model.Trainer.Email</p>
-        <p><strong>Expertise:</strong> @Model.Trainer.Field</p>
-    </div>
-    <div class="card-footer">
-        <a asp-page="./Index" class="btn btn-secondary">Back</a>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center mb-4">
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.Trainer.ProfileImagePath))
+                    {
+                        <img src="@Model.Trainer.ProfileImagePath" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile" />
+                    }
+                    else
+                    {
+                        <div class="bg-light rounded-circle d-inline-block mb-3 pt-4" style="width: 150px; height: 150px;">
+                            <i class="bi bi-person-fill text-secondary" style="font-size: 4rem;"></i>
+                        </div>
+                    }
+                    <h4>@Model.Trainer.FirstName @Model.Trainer.LastName</h4>
+                    <p class="text-muted">@Model.Trainer.Field</p>
+                    <hr />
+                    <p><strong>Email:</strong><br />@Model.Trainer.Email</p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-light"><strong>Documents</strong></div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.Trainer.ResumePath))
+                    {
+                        <a href="@Model.Trainer.ResumePath" target="_blank" class="btn btn-sm btn-outline-danger w-100">
+                            <i class="bi bi-file-pdf"></i> View Resume
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-muted italic">No resume uploaded</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white"><strong>Professional Information</strong></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="text-muted small">Specialization</label>
+                            <div>@(Model.Trainer.Specialization ?? "Not Specified")</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="text-muted small">Experience</label>
+                            <div>@Model.Trainer.YearsOfExperience Years</div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="text-muted small">Last Company</label>
+                            <div>@(Model.Trainer.LastCompanyName ?? "N/A")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white"><strong>Location Details</strong></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <label class="text-muted small">Street Address</label>
+                            <div>@Model.Trainer.Address.Street</div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label class="text-muted small">City & State</label>
+                            <div>@Model.Trainer.Address.City, @Model.Trainer.Address.State</div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label class="text-muted small">Country & Zip</label>
+                            <div>@Model.Trainer.Address.Country - @Model.Trainer.Address.Zip</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white text-success"><strong>Billing & Bank Info</strong></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="text-muted small">Rate</label>
+                            <h5 class="text-success">@Model.Trainer.Costing.HourlyRate @Model.Trainer.Costing.Currency / hr</h5>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small">Bank Details</label>
+                            <div><strong>@Model.Trainer.AccountDetails.BankName</strong></div>
+                            <div class="small">A/C: @Model.Trainer.AccountDetails.AccountNumber</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

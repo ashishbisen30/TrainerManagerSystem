@@ -1,42 +1,43 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TrainerManager.Application.Features.Trainers.DTOs;
+using MediatR;
 using TrainerManager.Application.Features.Trainers.Queries;
+using TrainerManager.Application.Features.Trainers.DTOs;
+using TrainerManager.Domain.Entities; // Ensure this is imported
 
 namespace TrainerManager.UI.Pages.Trainers
 {
-    //public class DetailsModel : PageModel
-    //{
-    //    public void OnGet()
-    //    {
-    //    }
-    //}
-
-    public class DetailsModel : PageModel
+    public class DetailsModel(IMediator mediator) : PageModel
     {
-        private readonly IMediator _mediator;
-
-        public DetailsModel(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        // The DTO that holds the trainer data
-        public TrainerSummaryDto Trainer { get; set; } = default!;
+        // Make sure this matches the new full DTO
+        public TrainerDetailsDto Trainer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            // We call the Mediator Query directly
-            var result = await _mediator.Send(new GetTrainerByIdQuery(id));
-
-            if (result == null)
-            {
-                return NotFound();
-            }
+            var result = await mediator.Send(new GetTrainerByIdQuery(id));
+            if (result == null) return NotFound();
 
             Trainer = result;
             return Page();
         }
     }
+
+    //public class DetailsModel(IMediator mediator) : PageModel
+    //{
+    //    // Change the type here from Trainer to TrainerSummaryDto
+    //    public TrainerSummaryDto Trainer { get; set; } = default!;
+
+    //    public async Task<IActionResult> OnGetAsync(int id)
+    //    {
+    //        var result = await mediator.Send(new GetTrainerByIdQuery(id));
+
+    //        if (result == null)
+    //        {
+    //            return NotFound();
+    //        }
+
+    //        Trainer = result; // Now the types match!
+    //        return Page();
+    //    }
+    //}
 }

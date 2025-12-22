@@ -17,7 +17,8 @@ builder.Services.AddRazorPages();
 // 2. Register Database - CHANGED from UseSqlServer to UseSqlite
 builder.Services.AddDbContext<TrainerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+//builder.Services.AddDbContext<TrainerDbContext>(options =>
+//    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 // ... remaini
 
 // 3. Register MediatR (Removed the duplicate)
@@ -30,6 +31,23 @@ builder.Services.AddAutoMapper(typeof(TrainerSummaryDto).Assembly);
 // Register the File Storage Service
 builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 var app = builder.Build();
+
+// --- Add this block to auto-migrate ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<TrainerDbContext>();
+        context.Database.Migrate(); // This creates the database and tables if they don't exist
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
+// --------------------------------------
 
 if (!app.Environment.IsDevelopment())
 {

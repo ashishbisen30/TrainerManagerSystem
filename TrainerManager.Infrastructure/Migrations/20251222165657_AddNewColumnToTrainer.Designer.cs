@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainerManager.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using TrainerManager.Infrastructure.Data;
 namespace TrainerManager.Infrastructure.Migrations
 {
     [DbContext(typeof(TrainerDbContext))]
-    partial class TrainerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251222165657_AddNewColumnToTrainer")]
+    partial class AddNewColumnToTrainer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
