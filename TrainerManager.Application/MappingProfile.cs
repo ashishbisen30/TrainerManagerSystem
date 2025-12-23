@@ -32,7 +32,7 @@ namespace TrainerManager.Application
             // Inside your MappingProfile constructor
             CreateMap<UpdateTrainerCommand, Trainer>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()) // Don't overwrite the ID
-                .ForPath(dest => dest.Costing.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate));
+                .ForPath(dest => dest.Costing.HourlyRate, opt => opt.MapFrom(src => src.Rate));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainerManager.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using TrainerManager.Infrastructure.Data;
 namespace TrainerManager.Infrastructure.Migrations
 {
     [DbContext(typeof(TrainerDbContext))]
-    partial class TrainerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251223155302_AddTrainerVisaAndCerts")]
+    partial class AddTrainerVisaAndCerts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -91,12 +94,68 @@ namespace TrainerManager.Infrastructure.Migrations
                     b.Property<string>("Specialization")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("VisaId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("YearsOfExperience")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VisaId");
+
                     b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("TrainerManager.Domain.ValueObjects.TrainerCertification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CertificateUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateObtained")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IssuingOrganization")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TrainerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("TrainerCertification");
+                });
+
+            modelBuilder.Entity("TrainerManager.Domain.ValueObjects.VisaDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsWorkAuthorized")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("VisaType")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VisaDetails");
                 });
 
             modelBuilder.Entity("TrainerManager.Domain.Entities.ClientTrainingHistory", b =>
@@ -110,6 +169,12 @@ namespace TrainerManager.Infrastructure.Migrations
 
             modelBuilder.Entity("TrainerManager.Domain.Entities.Trainer", b =>
                 {
+                    b.HasOne("TrainerManager.Domain.ValueObjects.VisaDetails", "Visa")
+                        .WithMany()
+                        .HasForeignKey("VisaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("TrainerManager.Domain.Entities.TrainerAccount", "AccountDetails", b1 =>
                         {
                             b1.Property<int>("TrainerId")
@@ -162,37 +227,6 @@ namespace TrainerManager.Infrastructure.Migrations
                                 .HasForeignKey("TrainerId");
                         });
 
-                    b.OwnsMany("TrainerManager.Domain.ValueObjects.TrainerCertification", "Certifications", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("CertificateUrl")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<DateTime>("DateObtained")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("IssuingOrganization")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Name")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("TrainerId")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("TrainerId");
-
-                            b1.ToTable("TrainerCertifications", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("TrainerId");
-                        });
-
                     b.OwnsOne("TrainerManager.Domain.ValueObjects.TrainerCosting", "Costing", b1 =>
                         {
                             b1.Property<int>("TrainerId")
@@ -213,51 +247,29 @@ namespace TrainerManager.Infrastructure.Migrations
                                 .HasForeignKey("TrainerId");
                         });
 
-                    b.OwnsOne("TrainerManager.Domain.ValueObjects.VisaDetails", "Visa", b1 =>
-                        {
-                            b1.Property<int>("TrainerId")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Country")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<DateTime?>("ExpiryDate")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<bool>("IsWorkAuthorized")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("VisaType")
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("TrainerId");
-
-                            b1.ToTable("Trainers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TrainerId");
-                        });
-
                     b.Navigation("AccountDetails")
                         .IsRequired();
 
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("Certifications");
-
                     b.Navigation("Costing")
                         .IsRequired();
 
-                    b.Navigation("Visa")
-                        .IsRequired();
+                    b.Navigation("Visa");
+                });
+
+            modelBuilder.Entity("TrainerManager.Domain.ValueObjects.TrainerCertification", b =>
+                {
+                    b.HasOne("TrainerManager.Domain.Entities.Trainer", null)
+                        .WithMany("Certifications")
+                        .HasForeignKey("TrainerId");
                 });
 
             modelBuilder.Entity("TrainerManager.Domain.Entities.Trainer", b =>
                 {
+                    b.Navigation("Certifications");
+
                     b.Navigation("TrainingHistory");
                 });
 #pragma warning restore 612, 618

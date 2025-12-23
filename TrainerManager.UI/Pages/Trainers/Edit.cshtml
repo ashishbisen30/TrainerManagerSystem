@@ -1,12 +1,12 @@
-﻿@page
-@model TrainerManager.UI.Pages.Trainers.CreateModel
+﻿@page "{id:int}"
+@model TrainerManager.UI.Pages.Trainers.EditModel
 @{
-    ViewData["Title"] = "Register New Trainer";
+    ViewData["Title"] = "Edit Trainer Profile";
 }
 
 <div class="container py-5">
     <form method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Command.Id" />
 
         <div class="row">
             <div class="col-lg-4">
@@ -16,18 +16,18 @@
                     </div>
                     <div class="card-body text-center">
                         <div class="mb-4">
-                            <i class="bi bi-person-plus text-success" style="font-size: 3rem;"></i>
-                            <p class="text-muted small">Upload the trainer's professional photo and resume to complete the profile.</p>
+                            <i class="bi bi-person-bounding-box text-primary" style="font-size: 3rem;"></i>
+                            <p class="text-muted small">Update your profile photo and professional resume here.</p>
                         </div>
 
                         <div class="mb-3 text-start">
                             <label class="form-label fw-bold small"><i class="bi bi-image me-2"></i>Profile Image</label>
-                            <input asp-for="Command.ProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
+                            <input asp-for="Command.NewProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
                         </div>
 
                         <div class="mb-3 text-start">
                             <label class="form-label fw-bold small"><i class="bi bi-file-earmark-pdf me-2"></i>Resume (PDF)</label>
-                            <input asp-for="Command.ResumeFile" type="file" class="form-control form-control-sm" accept=".pdf" />
+                            <input asp-for="Command.NewResumeFile" type="file" class="form-control form-control-sm" accept=".pdf" />
                         </div>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                 <div class="card shadow-sm border-0 bg-light">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success w-100 mb-2 shadow-sm">
-                            <i class="bi bi-save me-2"></i>Save Trainer
+                            <i class="bi bi-check-circle me-2"></i>Save All Changes
                         </button>
-                        <a asp-page="Index" class="btn btn-outline-secondary w-100">
+                        <a asp-page="./Details" asp-route-id="@Model.Command.Id" class="btn btn-outline-secondary w-100">
                             Cancel
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label asp-for="Command.FirstName" class="form-label small fw-bold required-label">First Name</label>
-                                <input asp-for="Command.FirstName" class="form-control" placeholder="Enter first name" required />
+                                <input asp-for="Command.FirstName" class="form-control" placeholder="Enter first name" />
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Command.LastName" class="form-label small fw-bold">Last Name</label>
@@ -74,8 +74,8 @@
                         </h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label asp-for="Command.TechField" class="form-label small fw-bold">Primary Tech Field</label>
-                                <input asp-for="Command.TechField" class="form-control" placeholder="e.g. Full Stack Development" />
+                                <label asp-for="Command.Field" class="form-label small fw-bold">Primary Tech Field</label>
+                                <input asp-for="Command.Field" class="form-control" placeholder="e.g. Full Stack Development" />
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Command.Specialization" class="form-label small fw-bold">Specialization</label>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-md-8">
                                 <label asp-for="Command.LastCompanyName" class="form-label small fw-bold">Most Recent Company</label>
-                                <input asp-for="Command.LastCompanyName" class="form-control" placeholder="Previous employer name" />
+                                <input asp-for="Command.LastCompanyName" class="form-control" />
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ namespace TrainerManager.Application.Features.Trainers.DTOs
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
-        public string? Field { get; set; }
+        public string? Field { get; set; }// This maps to "Primary Tech Field"
         public string? Specialization { get; set; }
         public int YearsOfExperience { get; set; }
         public string? LastCompanyName { get; set; }
