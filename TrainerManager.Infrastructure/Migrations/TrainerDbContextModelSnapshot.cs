@@ -219,19 +219,23 @@ namespace TrainerManager.Infrastructure.Migrations
                                 .HasColumnType("INTEGER");
 
                             b1.Property<string>("Country")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("TEXT")
+                                .HasColumnName("VisaCountry");
 
                             b1.Property<DateTime?>("ExpiryDate")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("TEXT")
+                                .HasColumnName("VisaExpiryDate");
 
                             b1.Property<int>("Id")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<bool>("IsWorkAuthorized")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("VisaIsWorkAuthorized");
 
                             b1.Property<string>("VisaType")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("TEXT")
+                                .HasColumnName("VisaType");
 
                             b1.HasKey("TrainerId");
 

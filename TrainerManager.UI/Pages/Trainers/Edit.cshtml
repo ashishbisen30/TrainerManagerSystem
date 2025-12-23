@@ -17,16 +17,14 @@
                     <div class="card-body text-center">
                         <div class="mb-4">
                             <i class="bi bi-person-bounding-box text-primary" style="font-size: 3rem;"></i>
-                            <p class="text-muted small">Update your profile photo and professional resume here.</p>
+                            <p class="text-muted small">Update photo and professional resume.</p>
                         </div>
-
                         <div class="mb-3 text-start">
-                            <label class="form-label fw-bold small"><i class="bi bi-image me-2"></i>Profile Image</label>
+                            <label class="form-label fw-bold small">New Profile Image</label>
                             <input asp-for="Command.NewProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
                         </div>
-
                         <div class="mb-3 text-start">
-                            <label class="form-label fw-bold small"><i class="bi bi-file-earmark-pdf me-2"></i>Resume (PDF)</label>
+                            <label class="form-label fw-bold small">New Resume (PDF)</label>
                             <input asp-for="Command.NewResumeFile" type="file" class="form-control form-control-sm" accept=".pdf" />
                         </div>
                     </div>
@@ -37,9 +35,7 @@
                         <button type="submit" class="btn btn-success w-100 mb-2 shadow-sm">
                             <i class="bi bi-check-circle me-2"></i>Save All Changes
                         </button>
-                        <a asp-page="./Details" asp-route-id="@Model.Command.Id" class="btn btn-outline-secondary w-100">
-                            Cancel
-                        </a>
+                        <a asp-page="./Details" asp-route-id="@Model.Command.Id" class="btn btn-outline-secondary w-100">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -47,21 +43,19 @@
             <div class="col-lg-8">
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2">
-                            <i class="bi bi-person-vcard me-2"></i>Personal Identification
-                        </h5>
+                        <h5 class="card-title text-primary mb-4 border-bottom pb-2"><i class="bi bi-person-vcard me-2"></i>Personal Identification</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label asp-for="Command.FirstName" class="form-label small fw-bold required-label">First Name</label>
-                                <input asp-for="Command.FirstName" class="form-control" placeholder="Enter first name" />
+                                <label asp-for="Command.FirstName" class="form-label small fw-bold">First Name</label>
+                                <input asp-for="Command.FirstName" class="form-control" />
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Command.LastName" class="form-label small fw-bold">Last Name</label>
-                                <input asp-for="Command.LastName" class="form-control" placeholder="Enter last name" />
+                                <input asp-for="Command.LastName" class="form-control" />
                             </div>
                             <div class="col-12">
                                 <label asp-for="Command.Email" class="form-label small fw-bold">Business Email</label>
-                                <input asp-for="Command.Email" class="form-control" placeholder="email@company.com" />
+                                <input asp-for="Command.Email" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -69,72 +63,51 @@
 
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2">
-                            <i class="bi bi-briefcase me-2"></i>Professional Expertise
-                        </h5>
+                        <h5 class="card-title text-primary mb-4 border-bottom pb-2"><i class="bi bi-telephone me-2"></i>Contact & Identity</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label asp-for="Command.Field" class="form-label small fw-bold">Primary Tech Field</label>
-                                <input asp-for="Command.Field" class="form-control" placeholder="e.g. Full Stack Development" />
+                                <label asp-for="Command.MobileNumber" class="form-label small fw-bold">Mobile Number</label>
+                                <input asp-for="Command.MobileNumber" class="form-control" />
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="Command.Specialization" class="form-label small fw-bold">Specialization</label>
-                                <input asp-for="Command.Specialization" class="form-control" placeholder="e.g. React, .NET Core" />
+                                <label asp-for="Command.LinkedInUrl" class="form-label small fw-bold">LinkedIn URL</label>
+                                <input asp-for="Command.LinkedInUrl" class="form-control" />
                             </div>
-                            <div class="col-md-4">
-                                <label asp-for="Command.Experience" class="form-label small fw-bold">Total Experience (Years)</label>
-                                <input asp-for="Command.Experience" type="number" class="form-control" />
-                            </div>
-                            <div class="col-md-8">
-                                <label asp-for="Command.LastCompanyName" class="form-label small fw-bold">Most Recent Company</label>
-                                <input asp-for="Command.LastCompanyName" class="form-control" />
+                            <div class="col-12">
+                                <label asp-for="Command.IdentityNumber" class="form-label small fw-bold">Identity (ID/PAN)</label>
+                                <input asp-for="Command.IdentityNumber" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm mb-4">
+                <div class="card shadow-sm mb-4 border-start border-warning border-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2">
-                            <i class="bi bi-geo-alt me-2"></i>Contact & Location
-                        </h5>
+                        <h5 class="card-title text-warning mb-4 border-bottom pb-2"><i class="bi bi-passport me-2"></i>Visa Information</h5>
                         <div class="row g-3">
-                            <div class="col-12">
-                                <label asp-for="Command.Street" class="form-label small fw-bold">Street Address</label>
-                                <input asp-for="Command.Street" class="form-control" />
+                            <div class="col-md-4">
+                                <label asp-for="Command.VisaType" class="form-label small fw-bold">Visa Type</label>
+                                <input asp-for="Command.VisaType" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label asp-for="Command.City" class="form-label small fw-bold">City</label>
-                                <input asp-for="Command.City" class="form-control" />
+                                <label asp-for="Command.VisaCountry" class="form-label small fw-bold">Country</label>
+                                <input asp-for="Command.VisaCountry" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label asp-for="Command.State" class="form-label small fw-bold">State/Province</label>
-                                <input asp-for="Command.State" class="form-control" />
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="Command.Zip" class="form-label small fw-bold">Postal Code</label>
-                                <input asp-for="Command.Zip" class="form-control" />
-                            </div>
-                            <div class="col-12">
-                                <label asp-for="Command.Country" class="form-label small fw-bold">Country</label>
-                                <input asp-for="Command.Country" class="form-control" />
+                                <label asp-for="Command.VisaExpiry" class="form-label small fw-bold">Expiry Date</label>
+                                <input asp-for="Command.VisaExpiry" type="date" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm mb-5 border-start border-success border-4">
+                <div class="card shadow-sm mb-4 border-start border-success border-4">
                     <div class="card-body">
-                        <h5 class="card-title text-success mb-4 border-bottom pb-2">
-                            <i class="bi bi-bank me-2"></i>Financial & Payment Details
-                        </h5>
+                        <h5 class="card-title text-success mb-4 border-bottom pb-2"><i class="bi bi-bank me-2"></i>Financial Details</h5>
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label asp-for="Command.Rate" class="form-label small fw-bold">Hourly Rate</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input asp-for="Command.Rate" class="form-control" />
-                                </div>
+                                <input asp-for="Command.Rate" class="form-control" />
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="Command.Currency" class="form-label small fw-bold">Currency</label>
@@ -155,7 +128,67 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary mb-4 border-bottom pb-2 d-flex justify-content-between">
+                            <span><i class="bi bi-patch-check me-2"></i>Certifications</span>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="addCert()">+ Add</button>
+                        </h5>
+                        <div id="certContainer">
+                            @if (Model.Command.Certifications != null)
+                            {
+                                for (int i = 0; i < Model.Command.Certifications.Count; i++)
+                                {
+                                    <div class="row g-2 mb-2 align-items-end border p-2 rounded bg-light mx-0">
+                                        <div class="col-md-5">
+                                            <label class="small fw-bold">Name</label>
+                                            <input asp-for="Command.Certifications[i].Name" class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small fw-bold">Org</label>
+                                            <input asp-for="Command.Certifications[i].IssuingOrganization" class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="small fw-bold">Date</label>
+                                            <input asp-for="Command.Certifications[i].DateObtained" type="date" class="form-control form-control-sm" />
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-sm btn-danger w-100" onclick="this.closest('.row').remove()"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    let certIndex = @(Model.Command.Certifications?.Count ?? 0);
+    function addCert() {
+        const html = `
+            <div class="row g-2 mb-2 align-items-end border p-2 rounded bg-light mx-0">
+                <div class="col-md-5">
+                    <label class="small fw-bold">Name</label>
+                    <input name="Command.Certifications[${certIndex}].Name" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-4">
+                    <label class="small fw-bold">Org</label>
+                    <input name="Command.Certifications[${certIndex}].IssuingOrganization" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-2">
+                    <label class="small fw-bold">Date</label>
+                    <input name="Command.Certifications[${certIndex}].DateObtained" type="date" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-sm btn-danger w-100" onclick="this.closest('.row').remove()"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>`;
+        document.getElementById('certContainer').insertAdjacentHTML('beforeend', html);
+        certIndex++;
+    }
+</script>

@@ -1,117 +1,114 @@
 ﻿@page "{id:int}"
 @model TrainerManager.UI.Pages.Trainers.DetailsModel
+@{
+    ViewData["Title"] = "Trainer Profile - " + Model.Trainer.FirstName;
+}
 
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-dark">Trainer Profile</h2>
+        <h2 class="text-dark fw-bold mb-0">Trainer Profile</h2>
         <div>
-            <a asp-page="./Index" class="btn btn-outline-secondary me-2">
-                <i class="bi bi-arrow-left me-1"></i> Back to List
+            <a asp-page="./Edit" asp-route-id="@Model.Trainer.Id" class="btn btn-primary shadow-sm">
+                <i class="bi bi-pencil me-2"></i>Edit Profile
             </a>
-            <a asp-page="./Edit" asp-route-id="@Model.Trainer.Id" class="btn btn-primary">
-                <i class="bi bi-pencil-square me-1"></i> Edit Profile
-            </a>
+            <a asp-page="./Index" class="btn btn-outline-secondary ms-2">Back to List</a>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="card shadow-sm border-0 mb-4 text-center p-4">
-                <div class="position-relative d-inline-block mx-auto mb-3">
-                    <img src="@(string.IsNullOrEmpty(Model.Trainer.ProfileImagePath) ? "/images/default-user.png" : Model.Trainer.ProfileImagePath)"
-                         class="rounded-circle shadow" style="width:160px; height:160px; object-fit:cover;" />
-                </div>
-                <h3 class="fw-bold mb-1">@Model.Trainer.FullName</h3>
-                <p class="text-primary fw-semibold mb-3">@Model.Trainer.Field</p>
-
-                <div class="list-group list-group-flush text-start border-top">
-                    <div class="list-group-item bg-transparent px-0 py-3">
-                        <small class="text-muted d-block text-uppercase fw-bold">Business Email</small>
-                        <span class="text-dark">@Model.Trainer.Email</span>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(Model.Trainer.ProfileImagePath))
+                    {
+                        <img src="@Model.Trainer.ProfileImagePath" class="rounded-circle mb-3 border p-1" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile" />
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-circle text-secondary mb-3" style="font-size: 6rem;"></i>
+                    }
+                    <h4 class="fw-bold">@Model.Trainer.FirstName @Model.Trainer.LastName</h4>
+                    <p class="text-muted">@Model.Trainer.Field</p>
+                    <hr />
+                    <div class="text-start mb-3">
+                        <p class="mb-1 small text-muted"><i class="bi bi-envelope me-2"></i>@Model.Trainer.Email</p>
+                        <p class="mb-1 small text-muted"><i class="bi bi-telephone me-2"></i>@Model.Trainer.MobileNumber</p>
+                        @if (!string.IsNullOrEmpty(Model.Trainer.LinkedInUrl))
+                        {
+                            <p class="mb-1 small"><i class="bi bi-linkedin me-2 text-primary"></i><a href="@Model.Trainer.LinkedInUrl" target="_blank">LinkedIn Profile</a></p>
+                        }
                     </div>
+                    @if (!string.IsNullOrEmpty(Model.Trainer.ResumePath))
+                    {
+                        <a href="@Model.Trainer.ResumePath" target="_blank" class="btn btn-sm btn-outline-danger w-100">
+                            <i class="bi bi-file-earmark-pdf me-2"></i>Download Resume
+                        </a>
+                    }
                 </div>
+            </div>
 
-                <div class="mt-4">
-                    <h6 class="fw-bold small text-uppercase text-muted mb-3">Documents</h6>
-                    <a href="@Model.Trainer.ResumePath" target="_blank"
-                       class="btn btn-outline-danger w-100 @(string.IsNullOrEmpty(Model.Trainer.ResumePath) ? "disabled" : "")">
-                        <i class="bi bi-file-earmark-pdf me-2"></i>View Resume
-                    </a>
+            <div class="card shadow-sm border-0 bg-light">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Identity & Status</h6>
+                    <ul class="list-unstyled mb-0 small">
+                        <li class="mb-2"><strong>ID/PAN:</strong> @(Model.Trainer.IdentityNumber ?? "N/A")</li>
+                        <li class="mb-2"><strong>Visa:</strong> @(Model.Trainer.Visa?.VisaType ?? "None") (@(Model.Trainer.Visa?.Country ?? "N/A"))</li>
+                        <li><strong>Visa Expiry:</strong> @(Model.Trainer.Visa?.ExpiryDate?.ToString("MMM dd, yyyy") ?? "N/A")</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 mb-4">
-                <div class="card-body p-4">
-                    <h5 class="text-primary mb-4 border-bottom pb-2">
-                        <i class="bi bi-briefcase me-2"></i>Professional Expertise
-                    </h5>
-                    <div class="row g-4">
+                <div class="card-body">
+                    <h5 class="border-bottom pb-2 mb-4 text-primary"><i class="bi bi-briefcase me-2"></i>Professional Background</h5>
+                    <div class="row mb-4">
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Primary Tech Field</label>
-                            <span class="fs-6">@Model.Trainer.Field</span>
+                            <label class="text-muted small">Specialization</label>
+                            <p class="fw-bold">@Model.Trainer.Specialization</p>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Specialization</label>
-                            <span class="fs-6">@(Model.Trainer.Specialization ?? "N/A")</span>
+                            <label class="text-muted small">Years of Experience</label>
+                            <p class="fw-bold">@Model.Trainer.YearsOfExperience Years</p>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Total Experience</label>
-                            <span class="fs-6">@Model.Trainer.YearsOfExperience Years</span>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Most Recent Company</label>
-                            <span class="fs-6">@(Model.Trainer.LastCompanyName ?? "N/A")</span>
+                        <div class="col-md-12">
+                            <label class="text-muted small">Last Company</label>
+                            <p class="fw-bold">@Model.Trainer.LastCompanyName</p>
                         </div>
                     </div>
+
+                    <h5 class="border-bottom pb-2 mb-4 text-primary"><i class="bi bi-patch-check me-2"></i>Certifications</h5>
+                    @if (Model.Trainer.Certifications != null && Model.Trainer.Certifications.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var cert in Model.Trainer.Certifications)
+                            {
+                                <div class="list-group-item px-0">
+                                    <h6 class="mb-0 fw-bold">@cert.Name</h6>
+                                    <small class="text-muted">@cert.IssuingOrganization — @cert.DateObtained.ToString("MMM yyyy")</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted italic small">No certifications recorded.</p>
+                    }
                 </div>
             </div>
 
-            <div class="card shadow-sm border-0 mb-4">
-                <div class="card-body p-4">
-                    <h5 class="text-primary mb-4 border-bottom pb-2">
-                        <i class="bi bi-geo-alt me-2"></i>Contact & Location
-                    </h5>
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <label class="form-label small fw-bold text-muted d-block">Street Address</label>
-                            <span class="fs-6">@Model.Trainer.Address.Street</span>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold text-muted d-block">City</label>
-                            <span class="fs-6">@Model.Trainer.Address.City</span>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold text-muted d-block">State/Province</label>
-                            <span class="fs-6">@Model.Trainer.Address.State</span>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold text-muted d-block">Postal Code</label>
-                            <span class="fs-6">@Model.Trainer.Address.Zip</span>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label small fw-bold text-muted d-block">Country</label>
-                            <span class="fs-6">@Model.Trainer.Address.Country</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow-sm border-0 mb-4 border-start border-success border-4">
-                <div class="card-body p-4">
-                    <h5 class="text-success mb-4 border-bottom pb-2">
-                        <i class="bi bi-bank me-2"></i>Financial & Payment Details
-                    </h5>
-                    <div class="row g-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="border-bottom pb-2 mb-4 text-success"><i class="bi bi-currency-dollar me-2"></i>Financials & Location</h5>
+                    <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Hourly Rate</label>
-                            <span class="fs-5 fw-bold text-success">@Model.Trainer.Costing.HourlyRate @Model.Trainer.Costing.Currency / hr</span>
+                            <label class="text-muted small">Billing Rate</label>
+                            <p class="fw-bold text-success">@Model.Trainer.Costing?.HourlyRate @Model.Trainer.Costing?.Currency / hr</p>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted d-block">Bank Details</label>
-                            <span class="d-block fw-bold">@Model.Trainer.AccountDetails.BankName</span>
-                            <span class="small text-muted">A/C: @Model.Trainer.AccountDetails.AccountNumber</span>
+                            <label class="text-muted small">Location</label>
+                            <p class="fw-bold">@Model.Trainer.Address?.City, @Model.Trainer.Address?.Country</p>
                         </div>
                     </div>
                 </div>

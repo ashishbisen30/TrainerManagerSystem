@@ -13,43 +13,36 @@ using TrainerManager.Infrastructure.Services;
 
 namespace TrainerManager.Application.Features.Trainers.Commands
 {
-    // Returns a DTO of the updated trainer to the frontend
-    //public record UpdateTrainerCommand : IRequest<TrainerSummaryDto>
-    //{
-    //    public int Id { get; set; }
-    //    public string FirstName { get; set; } = string.Empty;
-    //    public string LastName { get; set; } = string.Empty;
-    //    public string Email { get; set; } = string.Empty;
-    //    public string PhoneNumber { get; set; } = string.Empty;
-    //    public string Field { get; set; } = string.Empty;
-    //    public int YearsOfExperience { get; set; }
-    //    public decimal HourlyRate { get; set; } // For the Costing nested object
-    //}
     public record UpdateTrainerCommand : IRequest<bool>
     {
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
-        public string? Field { get; set; }
-        public string? Specialization { get; set; }
-        public int Experience { get; set; }
-        public string? LastCompanyName { get; set; }
 
-        // Address
-        public string Street { get; set; } = "";
-        public string City { get; set; } = "";
-        public string State { get; set; } = "";
-        public string Zip { get; set; } = "";
-        public string Country { get; set; } = "";
+        // ADD THESE - The Page is looking for these exact names
+        public string MobileNumber { get; set; } = string.Empty;
+        public string? AlternateMobileNumber { get; set; }
+        public string? LinkedInUrl { get; set; }
+        public string? IdentityNumber { get; set; }
+        public string? VisaType { get; set; }
+        public string? VisaCountry { get; set; }
+        public DateTime? VisaExpiry { get; set; }
+        public List<CertificationDto> Certifications { get; set; } = new();
 
-        // Finance
+        public string Street { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string Zip { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
         public decimal Rate { get; set; }
         public string Currency { get; set; } = "INR";
         public string? BankName { get; set; }
         public string? AccountNumber { get; set; }
-
-        // Files (Optional for updates)
+        public string? TechField { get; set; }
+        public string? Specialization { get; set; }
+        public int Experience { get; set; }
+        public string? LastCompanyName { get; set; }
         public IFormFile? NewProfileImage { get; set; }
         public IFormFile? NewResumeFile { get; set; }
     }
@@ -65,7 +58,7 @@ namespace TrainerManager.Application.Features.Trainers.Commands
             trainer.FirstName = request.FirstName;
             trainer.LastName = request.LastName;
             trainer.Email = request.Email;
-            trainer.Field = request.Field;
+            trainer.Field = request.TechField;
             trainer.Specialization = request.Specialization;
             trainer.YearsOfExperience = request.Experience;
             trainer.LastCompanyName = request.LastCompanyName;
