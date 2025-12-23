@@ -19,30 +19,31 @@ namespace TrainerManager.Application.Features.Trainers.Commands
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
-
-        // ADD THESE - The Page is looking for these exact names
         public string MobileNumber { get; set; } = string.Empty;
-        public string? AlternateMobileNumber { get; set; }
         public string? LinkedInUrl { get; set; }
         public string? IdentityNumber { get; set; }
         public string? VisaType { get; set; }
         public string? VisaCountry { get; set; }
         public DateTime? VisaExpiry { get; set; }
-        public List<CertificationDto> Certifications { get; set; } = new();
+
+        // Names must match the Razor Page "asp-for" exactly
+        public string? TechField { get; set; }
+        public string? Specialization { get; set; }
+        public int Experience { get; set; }
+        public string? LastCompanyName { get; set; }
 
         public string Street { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
         public string Zip { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
+
         public decimal Rate { get; set; }
         public string Currency { get; set; } = "INR";
         public string? BankName { get; set; }
         public string? AccountNumber { get; set; }
-        public string? TechField { get; set; }
-        public string? Specialization { get; set; }
-        public int Experience { get; set; }
-        public string? LastCompanyName { get; set; }
+
+        public List<CertificationDto> Certifications { get; set; } = new();
         public IFormFile? NewProfileImage { get; set; }
         public IFormFile? NewResumeFile { get; set; }
     }
@@ -79,33 +80,5 @@ namespace TrainerManager.Application.Features.Trainers.Commands
             return true;
         }
     }
-    /*
-    public class UpdateTrainerHandler(TrainerDbContext context, IMapper mapper)
-        : IRequestHandler<UpdateTrainerCommand, TrainerSummaryDto>
-    {
-        public async Task<TrainerSummaryDto> Handle(UpdateTrainerCommand request, CancellationToken ct)
-        {
-            // 1. Fetch the existing entity (do NOT use AsNoTracking because we want to update it)
-            var trainer = await context.Trainers
-                .Include(t => t.Costing) // Include owned entities or relations if necessary
-                .FirstOrDefaultAsync(t => t.Id == request.Id, ct);
-
-            if (trainer == null)
-            {
-                // You can throw a custom NotFoundException here
-                throw new KeyNotFoundException($"Trainer with ID {request.Id} was not found.");
-            }
-
-            // 2. Map the request values onto the existing trainer object
-            // AutoMapper updates 'trainer' directly with 'request' data
-            mapper.Map(request, trainer);
-
-            // 3. Save changes
-            await context.SaveChangesAsync(ct);
-
-            // 4. Return the updated version mapped to a DTO
-            return mapper.Map<TrainerSummaryDto>(trainer);
-        }
-    }
-    */
+    
 }

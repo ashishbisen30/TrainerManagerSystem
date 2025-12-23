@@ -23,7 +23,7 @@ namespace TrainerManager.UI.Pages.Trainers
                 FirstName = trainer.FirstName,
                 LastName = trainer.LastName,
                 Email = trainer.Email,
-                Field = trainer.Field,
+                TechField = trainer.Field,
                 Specialization = trainer.Specialization,
                 Experience = trainer.YearsOfExperience,
                 LastCompanyName = trainer.LastCompanyName,

@@ -52,8 +52,9 @@
                     <h6 class="fw-bold mb-3">Identity & Status</h6>
                     <ul class="list-unstyled mb-0 small">
                         <li class="mb-2"><strong>ID/PAN:</strong> @(Model.Trainer.IdentityNumber ?? "N/A")</li>
-                        <li class="mb-2"><strong>Visa:</strong> @(Model.Trainer.Visa?.VisaType ?? "None") (@(Model.Trainer.Visa?.Country ?? "N/A"))</li>
-                        <li><strong>Visa Expiry:</strong> @(Model.Trainer.Visa?.ExpiryDate?.ToString("MMM dd, yyyy") ?? "N/A")</li>
+                        <li><strong>Visa:</strong> @Model.Trainer.VisaType</li>
+                        <li><strong>Expiry:</strong> @Model.Trainer.VisaExpiry</li>
+                        @* <li><strong>Visa Expiry:</strong> @(Model.Trainer.Visa?.ExpiryDate?.ToString("MMM dd, yyyy") ?? "N/A")</li> *@
                     </ul>
                 </div>
             </div>
