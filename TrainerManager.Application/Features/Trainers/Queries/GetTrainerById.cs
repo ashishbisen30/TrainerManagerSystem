@@ -12,9 +12,22 @@ namespace TrainerManager.Application.Features.Trainers.Queries
     
     public record GetTrainerByIdQuery(int Id) : IRequest<TrainerDetailsDto?>;
 
-    public class GetTrainerByIdHandler(TrainerDbContext context)
+    public class GetTrainerByIdHandler(TrainerDbContext context, IMapper mapper)
     : IRequestHandler<GetTrainerByIdQuery, TrainerDetailsDto?>
     {
+        public async Task<TrainerDetailsDto?> Handle(GetTrainerByIdQuery request, CancellationToken ct)
+        {
+            var trainer = await context.Trainers
+                .Include(t => t.Certifications)
+                .FirstOrDefaultAsync(x => x.Id == request.Id, ct);
+
+            if (trainer == null) return null;
+
+            // Use AutoMapper to convert Entity to DTO
+            return mapper.Map<TrainerDetailsDto>(trainer);
+        }
+
+        /*
         public async Task<TrainerDetailsDto?> Handle(GetTrainerByIdQuery request, CancellationToken ct)
         {
             var trainer = await context.Trainers
@@ -32,12 +45,6 @@ namespace TrainerManager.Application.Features.Trainers.Queries
                 MobileNumber = trainer.MobileNumber,
                 LinkedInUrl = trainer.LinkedInUrl,
                 IdentityNumber = trainer.IdentityNumber,
-
-                // Map the flattened Visa fields
-                VisaType = trainer.Visa?.VisaType,
-                VisaCountry = trainer.Visa?.Country,
-                VisaExpiry = trainer.Visa?.ExpiryDate,
-
                 Field = trainer.Field,
                 Specialization = trainer.Specialization,
                 YearsOfExperience = trainer.YearsOfExperience,
@@ -45,7 +52,7 @@ namespace TrainerManager.Application.Features.Trainers.Queries
                 ProfileImagePath = trainer.ProfileImagePath,
                 ResumePath = trainer.ResumePath,
 
-                // Map Address correctly to the DTO type
+                // Grouped Mapping (Solves the "Cannot implicitly convert" error)
                 Address = new AddressDto
                 {
                     Street = trainer.Address?.Street ?? "",
@@ -54,20 +61,21 @@ namespace TrainerManager.Application.Features.Trainers.Queries
                     Zip = trainer.Address?.Zip ?? "",
                     Country = trainer.Address?.Country ?? ""
                 },
-
-                // Map Costing correctly to the DTO type
                 Costing = new CostingDto
                 {
                     HourlyRate = trainer.Costing?.HourlyRate ?? 0,
                     Currency = trainer.Costing?.Currency ?? "INR"
                 },
-
-                // Map Account correctly to the DTO type
                 AccountDetails = new AccountDto
                 {
                     BankName = trainer.AccountDetails?.BankName,
                     AccountNumber = trainer.AccountDetails?.AccountNumber
                 },
+
+                // Flat Visa mapping
+                VisaType = trainer.Visa?.VisaType,
+                VisaCountry = trainer.Visa?.Country,
+                VisaExpiry = trainer.Visa?.ExpiryDate,
 
                 Certifications = trainer.Certifications.Select(c => new CertificationDto
                 {
@@ -78,6 +86,7 @@ namespace TrainerManager.Application.Features.Trainers.Queries
             };
         }
 
+        */
     }
      
 }

@@ -6,171 +6,232 @@
 
 <div class="container py-5">
     <form method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
         <div class="row">
+
+            <!-- LEFT COLUMN -->
             <div class="col-lg-4">
+
+                <!-- PROFILE MEDIA -->
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-dark text-white text-center py-3">
-                        <h5 class="mb-0">Profile Media</h5>
+                    <div class="card-header bg-dark text-white text-center">
+                        Profile Media
                     </div>
-                    <div class="card-body text-center">
-                        <div class="mb-4">
-                            <i class="bi bi-person-plus text-success" style="font-size: 3rem;"></i>
-                            <p class="text-muted small">Upload photo and resume to complete the profile.</p>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label asp-for="Command.ProfileImage" class="form-label">Profile Image</label>
+                            <input asp-for="Command.ProfileImage" type="file" class="form-control" />
                         </div>
-                        <div class="mb-3 text-start">
-                            <label class="form-label fw-bold small"><i class="bi bi-image me-2"></i>Profile Image</label>
-                            <input asp-for="Command.ProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
-                        </div>
-                        <div class="mb-3 text-start">
-                            <label class="form-label fw-bold small"><i class="bi bi-file-earmark-pdf me-2"></i>Resume (PDF)</label>
-                            <input asp-for="Command.ResumeFile" type="file" class="form-control form-control-sm" accept=".pdf" />
+
+                        <div class="mb-3">
+                            <label asp-for="Command.ResumeFile" class="form-label">Resume (PDF)</label>
+                            <input asp-for="Command.ResumeFile" type="file" class="form-control" accept=".pdf" />
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm border-0 bg-light">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success w-100 mb-2 shadow-sm">
-                            <i class="bi bi-save me-2"></i>Save Trainer
-                        </button>
-                        <a asp-page="Index" class="btn btn-outline-secondary w-100">Cancel</a>
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-success w-100 mb-2">
+                    Save Trainer
+                </button>
+                <a asp-page="Index" class="btn btn-outline-secondary w-100">
+                    Cancel
+                </a>
             </div>
 
+            <!-- RIGHT COLUMN -->
             <div class="col-lg-8">
+
+                <!-- PERSONAL DETAILS -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2">
-                            <i class="bi bi-person-vcard me-2"></i>Personal Identification
-                        </h5>
+                        <h5 class="mb-3">Personal Details</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label asp-for="Command.FirstName" class="form-label small fw-bold">First Name *</label>
-                                <input asp-for="Command.FirstName" class="form-control" required />
+                                <label asp-for="Command.FirstName"></label>
+                                <input asp-for="Command.FirstName" class="form-control" />
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="Command.LastName" class="form-label small fw-bold">Last Name</label>
+                                <label asp-for="Command.LastName"></label>
                                 <input asp-for="Command.LastName" class="form-control" />
                             </div>
                             <div class="col-12">
-                                <label asp-for="Command.Email" class="form-label small fw-bold">Business Email</label>
-                                <input asp-for="Command.Email" class="form-control" type="email" />
+                                <label asp-for="Command.Email"></label>
+                                <input asp-for="Command.Email" type="email" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- CONTACT & IDENTITY -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2">
-                            <i class="bi bi-telephone me-2"></i>Contact & Identity
-                        </h5>
+                        <h5 class="mb-3">Contact & Identity</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label asp-for="Command.MobileNumber" class="form-label small fw-bold">Mobile Number *</label>
-                                <input asp-for="Command.MobileNumber" class="form-control" required />
+                                <label asp-for="Command.MobileNumber"></label>
+                                <input asp-for="Command.MobileNumber" class="form-control" />
                             </div>
+
                             <div class="col-md-6">
-                                <label asp-for="Command.LinkedInUrl" class="form-label small fw-bold">LinkedIn URL</label>
-                                <input asp-for="Command.LinkedInUrl" class="form-control" placeholder="https://linkedin.com/in/..." />
+                                <label asp-for="Command.LinkedInUrl"></label>
+                                <input asp-for="Command.LinkedInUrl" class="form-control" />
                             </div>
-                            <div class="col-md-12">
-                                <label asp-for="Command.IdentityNumber" class="form-label small fw-bold">Identity Number (PAN/Aadhar/SSN)</label>
-                                <input asp-for="Command.IdentityNumber" class="form-control" />
+
+                            <div class="col-12">
+                                <label asp-for="Command.IdentityNumber">
+                                    Identity (PAN / Aadhar / ID)
+                                </label>
+                                <input asp-for="Command.IdentityNumber"
+                                       class="form-control"
+                                       placeholder="Enter PAN / Aadhar / ID Number" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm mb-4 border-start border-warning border-4">
+                <!-- PROFESSIONAL DETAILS -->
+                <div class="card shadow-sm mb-4 border-start border-info border-4">
                     <div class="card-body">
-                        <h5 class="card-title text-warning mb-4 border-bottom pb-2">
-                            <i class="bi bi-passport me-2"></i>Visa Information
-                        </h5>
+                        <h5 class="mb-3">Professional Details</h5>
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label asp-for="Command.VisaType" class="form-label small fw-bold">Visa Type</label>
-                                <input asp-for="Command.VisaType" class="form-control" placeholder="H1-B, B1, etc." />
+                                <label asp-for="Command.TechField">Field</label>
+                                <input asp-for="Command.TechField" class="form-control" />
                             </div>
+
                             <div class="col-md-4">
-                                <label asp-for="Command.VisaCountry" class="form-label small fw-bold">Country</label>
+                                <label asp-for="Command.Specialization"></label>
+                                <input asp-for="Command.Specialization" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.Experience">
+                                    Years of Experience
+                                </label>
+                                <input asp-for="Command.Experience"
+                                       type="number"
+                                       min="0"
+                                       class="form-control" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Command.LastCompanyName">
+                                    Last Company
+                                </label>
+                                <input asp-for="Command.LastCompanyName"
+                                       class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VISA DETAILS -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">Visa Information</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label asp-for="Command.VisaType"></label>
+                                <input asp-for="Command.VisaType" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.VisaCountry"></label>
                                 <input asp-for="Command.VisaCountry" class="form-control" />
                             </div>
+
                             <div class="col-md-4">
-                                <label asp-for="Command.VisaExpiry" class="form-label small fw-bold">Expiry Date</label>
-                                <input asp-for="Command.VisaExpiry" type="date" class="form-control" />
+                                <label asp-for="Command.VisaExpiry"></label>
+                                <input asp-for="Command.VisaExpiry"
+                                       type="date"
+                                       class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm mb-4 border-start border-success border-4">
+                <!-- FINANCIAL DETAILS -->
+                <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-success mb-4 border-bottom pb-2">
-                            <i class="bi bi-bank me-2"></i>Financial & Bank Details
-                        </h5>
+                        <h5 class="mb-3">Financial & Bank Details</h5>
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label asp-for="Command.Rate" class="form-label small fw-bold">Hourly Rate</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input asp-for="Command.Rate" class="form-control" type="number" step="0.01" />
-                                </div>
+                                <label asp-for="Command.Rate"></label>
+                                <input asp-for="Command.Rate"
+                                       type="number"
+                                       step="0.01"
+                                       class="form-control" />
                             </div>
+
                             <div class="col-md-4">
-                                <label asp-for="Command.Currency" class="form-label small fw-bold">Currency</label>
+                                <label asp-for="Command.Currency"></label>
                                 <select asp-for="Command.Currency" class="form-select">
-                                    <option value="INR">INR (₹)</option>
-                                    <option value="USD">USD ($)</option>
-                                    <option value="EUR">EUR (€)</option>
-                                    <option value="GBP">GBP (£)</option>
+                                    <option value="INR">INR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
                                 </select>
                             </div>
+
                             <div class="col-md-6">
-                                <label asp-for="Command.BankName" class="form-label small fw-bold">Bank Name</label>
+                                <label asp-for="Command.BankName"></label>
                                 <input asp-for="Command.BankName" class="form-control" />
                             </div>
+
                             <div class="col-md-6">
-                                <label asp-for="Command.AccountNumber" class="form-label small fw-bold">Account Number</label>
+                                <label asp-for="Command.AccountNumber"></label>
                                 <input asp-for="Command.AccountNumber" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- LOCATION / ADDRESS -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-primary mb-4 border-bottom pb-2 d-flex justify-content-between">
-                            <span><i class="bi bi-patch-check me-2"></i>Certifications</span>
-                            <button type="button" class="btn btn-sm btn-primary" onclick="addCert()">+ Add</button>
-                        </h5>
-                        <div id="certContainer">
+                        <h5 class="mb-3">Location</h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label asp-for="Command.Street"></label>
+                                <input asp-for="Command.Street" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.City"></label>
+                                <input asp-for="Command.City" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.State"></label>
+                                <input asp-for="Command.State" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.Zip">
+                                    Zip / Postal Code
+                                </label>
+                                <input asp-for="Command.Zip" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="Command.Country"></label>
+                                <input asp-for="Command.Country" class="form-control" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- CERTIFICATIONS -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-secondary mb-4 border-bottom pb-2">
-                            <i class="bi bi-geo-alt me-2"></i>Location
-                        </h5>
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label asp-for="Command.Street" class="form-label small fw-bold">Street</label>
-                                <input asp-for="Command.Street" class="form-control" />
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="Command.City" class="form-label small fw-bold">City</label>
-                                <input asp-for="Command.City" class="form-control" />
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="Command.Country" class="form-label small fw-bold">Country</label>
-                                <input asp-for="Command.Country" class="form-control" />
-                            </div>
-                        </div>
+                        <h5 class="mb-3">Certifications</h5>
+                        <div id="certContainer"></div>
+                        <button type="button"
+                                class="btn btn-sm btn-primary"
+                                onclick="addCert()">
+                            + Add Certification
+                        </button>
                     </div>
                 </div>
 
@@ -179,30 +240,32 @@
     </form>
 </div>
 
-<script>
-    let certIndex = 0;
-    function addCert() {
-        const html = `
-            <div class="row g-2 mb-2 align-items-end border p-2 rounded bg-light mx-0" id="cert_row_${certIndex}">
-                <div class="col-md-5">
-                    <label class="small fw-bold">Certification Name</label>
-                    <input name="Command.Certifications[${certIndex}].Name" class="form-control form-control-sm" required />
+@section Scripts {
+    <script>
+        let certIndex = 0;
+
+        function addCert() {
+            document.getElementById('certContainer')
+                .insertAdjacentHTML('beforeend', `
+                <div class="row g-2 mb-2">
+                    <div class="col-md-5">
+                        <input name="Command.Certifications[${certIndex}].Name"
+                               class="form-control"
+                               placeholder="Certification Name" />
+                    </div>
+                    <div class="col-md-4">
+                        <input name="Command.Certifications[${certIndex}].IssuingOrganization"
+                               class="form-control"
+                               placeholder="Issuing Organization" />
+                    </div>
+                    <div class="col-md-3">
+                        <input name="Command.Certifications[${certIndex}].DateObtained"
+                               type="date"
+                               class="form-control" />
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="small fw-bold">Issuing Org</label>
-                    <input name="Command.Certifications[${certIndex}].IssuingOrganization" class="form-control form-control-sm" />
-                </div>
-                <div class="col-md-2">
-                    <label class="small fw-bold">Date</label>
-                    <input name="Command.Certifications[${certIndex}].DateObtained" type="date" class="form-control form-control-sm" />
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-sm btn-danger w-100" onclick="this.closest('.row').remove()">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-            </div>`;
-        document.getElementById('certContainer').insertAdjacentHTML('beforeend', html);
-        certIndex++;
-    }
-</script>
+            `);
+            certIndex++;
+        }
+    </script>
+}

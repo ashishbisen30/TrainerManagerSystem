@@ -1,115 +1,185 @@
 ﻿@page "{id:int}"
 @model TrainerManager.UI.Pages.Trainers.DetailsModel
-@{
-    ViewData["Title"] = "Trainer Profile - " + Model.Trainer.FirstName;
-}
 
-<div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-dark fw-bold mb-0">Trainer Profile</h2>
-        <div>
-            <a asp-page="./Edit" asp-route-id="@Model.Trainer.Id" class="btn btn-primary shadow-sm">
-                <i class="bi bi-pencil me-2"></i>Edit Profile
-            </a>
-            <a asp-page="./Index" class="btn btn-outline-secondary ms-2">Back to List</a>
-        </div>
-    </div>
-
-    <div class="row">
+<div class="container py-4">
+    <div class="row g-4">
         <div class="col-lg-4">
-            <div class="card shadow-sm border-0 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white text-center py-3">
+                    <h5 class="mb-0">Profile Media</h5>
+                </div>
                 <div class="card-body text-center">
-                    @if (!string.IsNullOrEmpty(Model.Trainer.ProfileImagePath))
-                    {
-                        <img src="@Model.Trainer.ProfileImagePath" class="rounded-circle mb-3 border p-1" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile" />
-                    }
-                    else
-                    {
-                        <i class="bi bi-person-circle text-secondary mb-3" style="font-size: 6rem;"></i>
-                    }
-                    <h4 class="fw-bold">@Model.Trainer.FirstName @Model.Trainer.LastName</h4>
-                    <p class="text-muted">@Model.Trainer.Field</p>
-                    <hr />
-                    <div class="text-start mb-3">
-                        <p class="mb-1 small text-muted"><i class="bi bi-envelope me-2"></i>@Model.Trainer.Email</p>
-                        <p class="mb-1 small text-muted"><i class="bi bi-telephone me-2"></i>@Model.Trainer.MobileNumber</p>
-                        @if (!string.IsNullOrEmpty(Model.Trainer.LinkedInUrl))
+                    <div class="mb-4">
+                        @if (!string.IsNullOrEmpty(Model.Trainer.ProfileImagePath))
                         {
-                            <p class="mb-1 small"><i class="bi bi-linkedin me-2 text-primary"></i><a href="@Model.Trainer.LinkedInUrl" target="_blank">LinkedIn Profile</a></p>
+                            <img src="@Model.Trainer.ProfileImagePath" class="img-thumbnail" style="width: 160px; height: 160px; object-fit: cover;" />
                         }
+                        else
+                        {
+                            <i class="bi bi-person-bounding-box text-primary" style="font-size: 4rem;"></i>
+                        }
+                        <p class="text-muted small mt-2">Professional identity and resume.</p>
                     </div>
                     @if (!string.IsNullOrEmpty(Model.Trainer.ResumePath))
                     {
-                        <a href="@Model.Trainer.ResumePath" target="_blank" class="btn btn-sm btn-outline-danger w-100">
-                            <i class="bi bi-file-earmark-pdf me-2"></i>Download Resume
+                        <a href="@Model.Trainer.ResumePath" target="_blank" class="btn btn-sm btn-outline-info w-100 mb-2">
+                            <i class="bi bi-file-earmark-pdf"></i> View Resume
                         </a>
                     }
                 </div>
             </div>
 
-            <div class="card shadow-sm border-0 bg-light">
-                <div class="card-body">
-                    <h6 class="fw-bold mb-3">Identity & Status</h6>
-                    <ul class="list-unstyled mb-0 small">
-                        <li class="mb-2"><strong>ID/PAN:</strong> @(Model.Trainer.IdentityNumber ?? "N/A")</li>
-                        <li><strong>Visa:</strong> @Model.Trainer.VisaType</li>
-                        <li><strong>Expiry:</strong> @Model.Trainer.VisaExpiry</li>
-                        @* <li><strong>Visa Expiry:</strong> @(Model.Trainer.Visa?.ExpiryDate?.ToString("MMM dd, yyyy") ?? "N/A")</li> *@
-                    </ul>
-                </div>
+            <div class="card shadow-sm border-0 bg-light p-3">
+                <a asp-page="./Edit" asp-route-id="@Model.Trainer.Id" class="btn btn-primary w-100 mb-2">
+                    <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                </a>
+                <a asp-page="./Index" class="btn btn-outline-secondary w-100">Back to List</a>
             </div>
         </div>
 
         <div class="col-lg-8">
-            <div class="card shadow-sm border-0 mb-4">
+            <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <h5 class="border-bottom pb-2 mb-4 text-primary"><i class="bi bi-briefcase me-2"></i>Professional Background</h5>
-                    <div class="row mb-4">
+                    <h5 class="section-title text-primary"><i class="bi bi-person-vcard me-2"></i>Personal Identification</h5>
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="text-muted small">Specialization</label>
-                            <p class="fw-bold">@Model.Trainer.Specialization</p>
+                            <label class="label-small">First Name</label>
+                            <p class="border-bottom">@Model.Trainer.FirstName</p>
                         </div>
                         <div class="col-md-6">
-                            <label class="text-muted small">Years of Experience</label>
-                            <p class="fw-bold">@Model.Trainer.YearsOfExperience Years</p>
+                            <label class="label-small">Last Name</label>
+                            <p class="border-bottom">@Model.Trainer.LastName</p>
                         </div>
-                        <div class="col-md-12">
-                            <label class="text-muted small">Last Company</label>
-                            <p class="fw-bold">@Model.Trainer.LastCompanyName</p>
+                        <div class="col-12">
+                            <label class="label-small">Business Email</label>
+                            <p class="border-bottom">@Model.Trainer.Email</p>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <h5 class="border-bottom pb-2 mb-4 text-primary"><i class="bi bi-patch-check me-2"></i>Certifications</h5>
-                    @if (Model.Trainer.Certifications != null && Model.Trainer.Certifications.Any())
-                    {
-                        <div class="list-group list-group-flush">
-                            @foreach (var cert in Model.Trainer.Certifications)
-                            {
-                                <div class="list-group-item px-0">
-                                    <h6 class="mb-0 fw-bold">@cert.Name</h6>
-                                    <small class="text-muted">@cert.IssuingOrganization — @cert.DateObtained.ToString("MMM yyyy")</small>
-                                </div>
-                            }
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="section-title text-primary"><i class="bi bi-telephone me-2"></i>Contact & Identity</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="label-small">Mobile Number</label>
+                            <p class="border-bottom">@Model.Trainer.MobileNumber</p>
                         </div>
+                        <div class="col-md-6">
+                            <label class="label-small">LinkedIn URL</label>
+                            <p class="border-bottom">@(Model.Trainer.LinkedInUrl ?? "N/A")</p>
+                        </div>
+                        <div class="col-12">
+                            <label class="label-small">Identity (ID/PAN)</label>
+                            <p class="border-bottom">@(Model.Trainer.IdentityNumber ?? "N/A")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="section-title text-primary"><i class="bi bi-briefcase me-2"></i>Experience & Skills</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="label-small">Field / Specialization</label>
+                            <p class="border-bottom">@Model.Trainer.Field - @Model.Trainer.Specialization</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label-small">Years of Experience</label>
+                            <p class="border-bottom">@Model.Trainer.YearsOfExperience Years</p>
+                        </div>
+                        <div class="col-12">
+                            <label class="label-small">Last Company</label>
+                            <p class="border-bottom">@Model.Trainer.LastCompanyName</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4 border-visa">
+                <div class="card-body">
+                    <h5 class="section-title text-warning"><i class="bi bi-passport me-2"></i>Visa Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="label-small">Visa Type</label>
+                            <p>@Model.Trainer.VisaType</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label-small">Country</label>
+                            <p>@Model.Trainer.VisaCountry</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label-small">Expiry Date</label>
+                            <p>@Model.Trainer.VisaExpiry?.ToString("dd-MM-yyyy")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4 border-finance">
+                <div class="card-body">
+                    <h5 class="section-title text-success"><i class="bi bi-bank me-2"></i>Financial & Bank Details</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="label-small">Hourly Rate</label>
+                            <p>@Model.Trainer.Costing.HourlyRate @Model.Trainer.Costing.Currency</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label-small">Bank Name</label>
+                            <p>@Model.Trainer.AccountDetails?.BankName</p>
+                        </div>
+                        <div class="col-12">
+                            <label class="label-small">Account Number</label>
+                            <p>@Model.Trainer.AccountDetails?.AccountNumber</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="section-title text-primary"><i class="bi bi-patch-check me-2"></i>Certifications</h5>
+                    @if (Model.Trainer.Certifications.Any())
+                    {
+                        foreach (var cert in Model.Trainer.Certifications)
+                        {
+                            <div class="d-flex justify-content-between border-bottom py-2 mb-1">
+                                <div>
+                                    <span class="fw-bold">@cert.Name</span><br />
+                                    <small class="text-muted">@cert.IssuingOrganization</small>
+                                </div>
+                                <span class="badge bg-light text-dark align-self-center">@cert.DateObtained.ToString("MMM yyyy")</span>
+                            </div>
+                        }
                     }
                     else
                     {
-                        <p class="text-muted italic small">No certifications recorded.</p>
+                        <p class="text-muted small">No certifications recorded.</p>
                     }
                 </div>
             </div>
 
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <h5 class="border-bottom pb-2 mb-4 text-success"><i class="bi bi-currency-dollar me-2"></i>Financials & Location</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="text-muted small">Billing Rate</label>
-                            <p class="fw-bold text-success">@Model.Trainer.Costing?.HourlyRate @Model.Trainer.Costing?.Currency / hr</p>
+                    <h5 class="section-title text-secondary"><i class="bi bi-geo-alt me-2"></i>Location</h5>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="label-small">Street</label>
+                            <p class="border-bottom">@Model.Trainer.Address.Street</p>
                         </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small">Location</label>
-                            <p class="fw-bold">@Model.Trainer.Address?.City, @Model.Trainer.Address?.Country</p>
+                        <div class="col-md-4">
+                            <label class="label-small">City</label>
+                            <p class="border-bottom">@Model.Trainer.Address.City</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label-small">State / Zip</label>
+                            <p class="border-bottom">@Model.Trainer.Address.State @Model.Trainer.Address.Zip</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label-small">Country</label>
+                            <p class="border-bottom">@Model.Trainer.Address.Country</p>
                         </div>
                     </div>
                 </div>

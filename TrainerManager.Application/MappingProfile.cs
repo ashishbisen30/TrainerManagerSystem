@@ -5,6 +5,7 @@ using System.Text;
 using TrainerManager.Application.Features.Trainers.Commands;
 using TrainerManager.Application.Features.Trainers.DTOs;
 using TrainerManager.Domain.Entities;
+using TrainerManager.Domain.ValueObjects;
 
 namespace TrainerManager.Application
 {
@@ -12,27 +13,39 @@ namespace TrainerManager.Application
     {
         public MappingProfile()
         {
-            // Add this line to disable the internal method scanning that causes the error
-            //InternalApi.Internal(this).ForAllMaps((typeMap, mappingExpression) => { });
-            // 1. THIS IS THE FIX: Disable the scanning of extension methods 
-            // that causes the 'MaxInteger' verification exception.
-            //ShouldMapMethod = (m => false);
+            // 1. Map the small Helper Objects (Value Objects -> DTOs)
+            CreateMap<Address, AddressDto>();
+            CreateMap<TrainerCosting, CostingDto>();
+            CreateMap<TrainerAccount, AccountDto>();
 
+            // 2. THIS IS THE MISSING PIECE: Map Certification Entity -> DTO
+            // Without this, the Trainer map fails when it hits the Certifications list
+            CreateMap<TrainerCertification, CertificationDto>();
+
+            // 3. Map the main Trainer Entity -> Details DTO
+            CreateMap<Trainer, TrainerDetailsDto>()
+                // Map Flat Visa fields
+                .ForMember(d => d.VisaType, opt => opt.MapFrom(s => s.Visa.VisaType))
+                .ForMember(d => d.VisaCountry, opt => opt.MapFrom(s => s.Visa.Country))
+                .ForMember(d => d.VisaExpiry, opt => opt.MapFrom(s => s.Visa.ExpiryDate))
+
+                // Map Grouped Objects
+                // AutoMapper will use the maps defined in Step 1 & 2 automatically
+                .ForMember(d => d.Address, opt => opt.MapFrom(s => s.Address))
+                .ForMember(d => d.Costing, opt => opt.MapFrom(s => s.Costing))
+                .ForMember(d => d.AccountDetails, opt => opt.MapFrom(s => s.AccountDetails))
+                .ForMember(d => d.Certifications, opt => opt.MapFrom(s => s.Certifications));
+
+            // 4. Map Trainer -> Summary DTO (For the Index/List Page)
             CreateMap<Trainer, TrainerSummaryDto>()
-                // Combine FirstName and LastName into FullName
                 .ForMember(dest => dest.FullName,
                     opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
-                // Map HourlyRate from the nested Costing object
                 .ForMember(dest => dest.HourlyRate,
                     opt => opt.MapFrom(src => src.Costing.HourlyRate))
-                // Map YearsOfExperience to Experience
                 .ForMember(dest => dest.Experience,
                     opt => opt.MapFrom(src => src.YearsOfExperience));
-
-            // Inside your MappingProfile constructor
-            CreateMap<UpdateTrainerCommand, Trainer>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore()) // Don't overwrite the ID
-                .ForPath(dest => dest.Costing.HourlyRate, opt => opt.MapFrom(src => src.Rate));
         }
+         
+
     }
 }
