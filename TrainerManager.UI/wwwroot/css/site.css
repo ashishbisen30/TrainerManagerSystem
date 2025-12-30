@@ -46,3 +46,83 @@ input[required] {
     input[required]:focus {
         border-left: 3px solid #0d6efd;
     }
+
+/* --- Dashboard & Professional UI Enhancements --- */
+
+/* Soft Badges for Fields and Statuses */
+.bg-soft-primary {
+    background-color: #e7f1ff !important;
+    color: #0d6efd !important;
+    border: 1px solid #cfe2ff;
+}
+
+.bg-soft-success {
+    background-color: #e1f7ec !important;
+    color: #198754 !important;
+    border: 1px solid #badbcc;
+}
+
+.bg-soft-warning {
+    background-color: #fff3cd !important;
+    color: #856404 !important;
+    border: 1px solid #ffeeba;
+}
+
+/* Modern Card Styling */
+.card {
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
+
+/* Hover effect for Dashboard cards */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Table Enhancements */
+.table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* Sidebar Action List Items */
+.list-group-item-action {
+    border: none;
+    margin-bottom: 5px;
+    border-radius: 8px !important;
+}
+
+    .list-group-item-action:hover {
+        background-color: #f0f2f5;
+        color: #0d6efd;
+    }
+
+/* Icon Containers */
+.bg-opacity-10 {
+    background-opacity: 0.1;
+}
+
+/* Profile Image in Details Page */
+.profile-img-container {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}

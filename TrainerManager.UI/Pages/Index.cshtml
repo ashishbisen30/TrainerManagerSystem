@@ -1,10 +1,181 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-4">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="fw-bold text-dark">Trainer Management Dashboard</h1>
+            <p class="text-muted">Monitor trainer certifications, experience, and financials at a glance.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-light text-dark border p-2">
+                <i class="bi bi-calendar3 me-2"></i>@DateTime.Now.ToString("D")
+            </span>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-primary border-5 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-people text-primary fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="mb-0 fw-bold">@Model.Stats.TotalTrainers</h4>
+                            <p class="text-muted small mb-0">Total Trainers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-success border-5 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-patch-check text-success fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="mb-0 fw-bold">@Model.Stats.TotalCertifications</h4>
+                            <p class="text-muted small mb-0">Certifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-warning border-5 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-passport text-warning fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="mb-0 fw-bold">@Model.Stats.ExpiringVisasCount</h4>
+                            <p class="text-muted small mb-0">Expiring Visas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-info border-5 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 bg-info bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-cash-stack text-info fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="mb-0 fw-bold">@Model.Stats.AverageHourlyRate.ToString("C0")</h4>
+                            <p class="text-muted small mb-0">Avg. Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold text-dark">Recently Onboarded</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4">Trainer Name</th>
+                                    <th>Field</th>
+                                    <th>Experience</th>
+                                    <th class="text-end pe-4">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var trainer in Model.Stats.RecentTrainers)
+                                {
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="fw-bold">@trainer.FullName</div>
+                                            <small class="text-muted">ID: #TRN-@trainer.Id</small>
+                                        </td>
+                                        <td><span class="badge bg-soft-primary text-primary">@trainer.Field</span></td>
+                                        <td>@trainer.Experience Yrs</td>
+
+                                        <td class="text-end pe-4">
+                                            <a asp-page="/Trainers/Details" asp-route-id="@trainer.Id" class="btn btn-sm btn-light border">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            @* <div class="card shadow-sm border-0 mb-4 bg-dark text-white">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-person-plus-fill fs-1 mb-3"></i>
+                    <h4>New Onboarding</h4>
+                    <p class="small opacity-75">Start the registration process for a new trainer.</p>
+                    <a asp-page="/Trainers/Add" class="btn btn-primary w-100 mt-2 py-2">
+                        <i class="bi bi-plus-lg me-2"></i>Register Now
+                    </a>
+                </div>
+            </div> *@
+            <div class="card shadow-sm border-0 mb-4 bg-dark text-white">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-person-plus-fill fs-1 mb-3"></i>
+                    <h4>New Onboarding</h4>
+                    <p class="small opacity-75">Start the registration process for a new trainer.</p>
+
+                    <a asp-page="/Trainers/Create" class="btn btn-primary w-100 mt-2 py-2">
+                        <i class="bi bi-plus-lg me-2"></i>Register Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white fw-bold">Management Tools</div>
+                <div class="list-group list-group-flush">
+                    <a asp-page="/Trainers/Index" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-list-stars text-primary me-3"></i>Trainer Directory
+                        </div>
+                        <i class="bi bi-chevron-right small text-muted"></i>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-file-earmark-pdf text-danger me-3"></i>Export PDF Report
+                        </div>
+                        <i class="bi bi-download small text-muted"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .bg-soft-primary {
+        background-color: #e7f1ff;
+    }
+
+    .card {
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+</style>
